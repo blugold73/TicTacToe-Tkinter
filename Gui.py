@@ -4,7 +4,7 @@ from Game import Game
 
 root = Tk()
 root.title("Tic Tac Toe")
-game = Game('u', 0, 0, [], [], [])
+game = Game('u', 0, 1, [], [], [])
 game.turn = game.chooseRandomPlayer()
 turnLabelTxt = StringVar()
 turnLabelTxt.set(f"Current Turn: {'X' if game.turn == 1 else 'O'}")
@@ -27,8 +27,6 @@ class Gui:
 
     def click(self, row, column):
         game.sendInput(row, column)
-        game.updateTurn()
-        print(game.turn)
         turnLabelTxt.set(f"Current Turn: {'X' if game.turn %2 == 1 else 'O'}")
         self.gameScreen(self)
 
@@ -36,9 +34,7 @@ class Gui:
         self.clearWindow(self)
         #Button(root, text='-', width=btnGridSize*3, height=btnGridSize).grid(row=0, column=0)
         Label(root, text=turnLabelTxt.get(), font="24").grid(row=0, column=0, columnspan=game.boardSize)       
-        print(game.boardSize)
         buttonList = [[] for i in range(game.boardSize)]
-        print(buttonList)
         for currentRow in range(game.boardSize):
             for currentColumn in range(game.boardSize):
                 buttonList[currentRow].append(Button(root, text=game.board[currentRow][currentColumn], width=btnGridSize*3, height=btnGridSize))
