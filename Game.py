@@ -1,7 +1,13 @@
 class Game:
-    def __init__(self):
-        pass
+    def __init__(self, mode, boardSize, board):
+        self.mode = mode
+        self.boardSize = boardSize
+        self.board = board
+
     def playSingle(self):
-        print("Playing a singleplay game")
+        pass
     def playMulti(self):
-        print("Playing a mutiplayer game")
+        pass
+
+    def setBoardSize(self):
+        pass
