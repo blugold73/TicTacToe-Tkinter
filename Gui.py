@@ -5,7 +5,6 @@ from Game import Game
 root = Tk()
 root.title("Tic Tac Toe")
 game = Game('u', 0, [])
-boardSizeInput = StringVar()
 
 class Gui:
     def __init__(self):
@@ -20,18 +19,45 @@ class Gui:
 
         root.mainloop()
 
+    def click(self):
+        pass
+
     def gameScreen(self):
+        btnGridSize = 4
+        playerOne, playerTwo = 'X', 'O'
+        coinFlip, firstTurn = game.chooseRandomPlayer(), ''
+        if coinFlip == 0: firstTurn = playerOne
+        elif coinFlip == 1: firstTurn = playerTwo
+
         self.clearWindow(self)
+        #Button(root, text='-', width=btnGridSize*3, height=btnGridSize).grid(row=0, column=0)
+
+        Label(root, text=f"Current Turn: {firstTurn}", font="24").grid(row=0, column=0, columnspan=game.boardSize)       
+        print(game.boardSize)
+        buttonList = [[] for i in range(game.boardSize)]
+        print(buttonList)
+        for currentRow in range(game.boardSize):
+            for currentColumn in range(game.boardSize):
+                buttonList[currentRow].append(Button(root, width=btnGridSize*3, height=btnGridSize))
+
+                buttonList[currentRow][currentColumn].config(command=lambda row=currentRow, column=currentColumn: click(row,column))
+                buttonList[currentRow][currentColumn].grid(row=currentRow+1, column=currentColumn)
+                #buttonList[currentRow][currentColumn] = Button(buttonFrame, text='-', width=btnGridSize*3, height=btnGridSize).grid(row=currentRow, column=currentColumn)
+
+        if game.mode == 's':
+            pass
+        elif game.mode == 'm':
+            pass
+
         print("Playing Game")
 
     def setupGame(self, mode):
-        if mode == 's': game.mode = 's'
-        if mode == 'm': game.mode = 'm'
+        game.mode = mode
         self.boardSizeScreen(self)
         
 
-    def updateBoardSize(self):
-        updatedSize = int(boardSizeInput.get())
+    def updateBoardSize(self, boardSizeInput):
+        updatedSize = int(boardSizeInput)
         if updatedSize % 2 == 1 and updatedSize > 2 and updatedSize < 10:
                 game.boardSize = updatedSize
                 gameBoard = [['' for i in range(updatedSize)] for row in range(updatedSize)]
@@ -46,9 +72,10 @@ class Gui:
     def boardSizeScreen(self):
         self.clearWindow(self)
 
+        boardSizeInput = StringVar()
         Label(root, text="Board size: ").grid(row=0, column=0)
         Entry(root, textvariable=boardSizeInput).grid(row=0, column=1)
-        Button(root, text="Set Board Size", command=lambda: self.updateBoardSize(self)).grid(row=1, column=0, columnspan=2)
+        Button(root, text="Set Board Size", command=lambda: self.updateBoardSize(self, boardSizeInput.get())).grid(row=1, column=0, columnspan=2)
 
     def clearWindow(self):
         for widget in root.winfo_children():
