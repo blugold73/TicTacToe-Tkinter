@@ -4,12 +4,10 @@ from Game import Game
 
 root = Tk()
 root.title("Tic Tac Toe")
-game = Game('u', 0, [], 0)
+game = Game('u', 0, 0, [], [], [])
 game.turn = game.chooseRandomPlayer()
 turnLabelTxt = StringVar()
 turnLabelTxt.set(f"Current Turn: {'X' if game.turn == 1 else 'O'}")
-currentX = []
-currentO = []
 
 btnGridSize = 4
 playerOne, playerTwo = 'X', 'O'
@@ -61,6 +59,8 @@ class Gui:
         if updatedSize % 2 == 1 and updatedSize > 2 and updatedSize < 10:
                 game.boardSize = updatedSize
                 gameBoard = [['' for i in range(updatedSize)] for row in range(updatedSize)]
+                game.currentO = gameBoard
+                game.currentX = gameBoard
                 game.board = gameBoard
                 messagebox.showinfo("Sucess", f"Gameboard set to {updatedSize}x{updatedSize}")
                 self.gameScreen(self)
