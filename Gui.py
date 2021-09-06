@@ -4,7 +4,7 @@ from Game import Game
 
 root = Tk()
 root.title("Tic Tac Toe")
-game = Game('u', 0, 0, [], [], [])
+game = Game('u', 0, 0, [])
 turnLabelTxt = StringVar()
 turnLabelTxt.set(f"Current Turn: X")
 
@@ -50,9 +50,7 @@ class Gui:
         updatedSize = int(boardSizeInput)
         if updatedSize % 2 == 1 and updatedSize > 2 and updatedSize < 10:
                 game.boardSize = updatedSize
-                gameBoard = [['' for i in range(updatedSize)] for row in range(updatedSize)]
-                game.currentO = gameBoard
-                game.currentX = gameBoard
+                gameBoard = [['-' for i in range(updatedSize)] for row in range(updatedSize)]
                 game.board = gameBoard
                 messagebox.showinfo("Sucess", f"Gameboard set to {updatedSize}x{updatedSize}")
                 self.gameScreen(self)
