@@ -4,13 +4,11 @@ from Game import Game
 
 root = Tk()
 root.title("Tic Tac Toe")
-game = Game('u', 0, 1, [], [], [])
-game.turn = game.chooseRandomPlayer()
+game = Game('u', 0, 0, [], [], [])
 turnLabelTxt = StringVar()
-turnLabelTxt.set(f"Current Turn: {'X' if game.turn == 1 else 'O'}")
+turnLabelTxt.set(f"Current Turn: X")
 
 btnGridSize = 4
-playerOne, playerTwo = 'X', 'O'
 
 class Gui:
     def __init__(self):
@@ -27,7 +25,7 @@ class Gui:
 
     def click(self, row, column):
         game.sendInput(row, column)
-        turnLabelTxt.set(f"Current Turn: {'X' if game.turn %2 == 1 else 'O'}")
+        turnLabelTxt.set(f"Current Turn: {'X' if game.turn % 2 == 0 or game.turn == 0 else 'O'}")
         self.gameScreen(self)
 
     def gameScreen(self):
@@ -42,8 +40,6 @@ class Gui:
                 buttonList[currentRow][currentColumn].config(command=lambda row=currentRow, column=currentColumn: self.click(self, row, column))
                 buttonList[currentRow][currentColumn].grid(row=currentRow+1, column=currentColumn)
                 #buttonList[currentRow][currentColumn] = Button(buttonFrame, text='-', width=btnGridSize*3, height=btnGridSize).grid(row=currentRow, column=currentColumn)
-
-        print("Playing Game")
 
     def setupGame(self, mode):
         game.mode = mode
