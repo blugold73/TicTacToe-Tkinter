@@ -20,11 +20,42 @@ class Game:
         print(f'Turn: {self.turn}')
 
         '''Check Rows'''
+        for i in range(self.boardSize):
+            rowStr = ''.join(self.board[i][:self.boardSize])
+
+            if rowStr == 'X'*self.boardSize:
+                self.winner = 'X'
+                self.gameOver = True
+            if rowStr == 'O'*self.boardSize:
+                self.winner = 'O'
+                self.gameOver = True
 
         '''Check Columns'''
+        for i in range(self.boardSize):
+            colStr = ''
+            for j in range(self.boardSize):
+                colStr += self.board[j][i]
+
+            if colStr == 'X'*self.boardSize:
+                self.winner = 'X'
+                self.gameOver = True
+            if colStr == 'O'*self.boardSize:
+                self.winner = 'O'
+                self.gameOver = True
 
         '''Check Diagonals'''
+        diagonalDown, diagonalUp = '', ''
+        for i in range(self.boardSize):
+            diagonalDown += self.board[i][i]
+            diagonalUp += self.board[self.boardSize-1-i][i]
 
+        if diagonalUp == 'X'*self.boardSize or diagonalDown == 'X'*self.boardSize:
+            self.winner = 'X'
+            self.gameOver = True
+            
+        if diagonalUp == 'O'*self.boardSize or diagonalDown == 'O'*self.boardSize:
+            self.winner = 'O'
+            self.gameOver = True
         '''Check if board is completely filled'''
         if self.turn >= (self.boardSize ** 2): self.gameOver = True
 
