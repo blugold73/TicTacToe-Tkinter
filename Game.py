@@ -1,22 +1,16 @@
 import random
 
 class Game:
-    def __init__(self, mode, boardSize, turn, board, currentX, currentO):
+    def __init__(self, mode, boardSize, turn, board):
         self.mode = mode
         self.boardSize = boardSize
         self.turn = turn
         self.board = board
-        self.currentX = currentX
-        self.currentO = currentO
         self.gameOver = False
+        self.winner = ''
 
-    def chooseRandomPlayer(self):
-        return random.randint(1,2)
-    
     def checkSpaces(self):
         print(f'Board: {self.board}')
-        print(f'BoardX: {self.currentX}')
-        print(f'BoardO: {self.currentO}')
         print(f'Turn: {self.turn}')
 
         '''Check Rows'''
@@ -57,44 +51,37 @@ class Game:
             self.winner = 'O'
             self.gameOver = True
         '''Check if board is completely filled'''
-        if self.turn >= (self.boardSize ** 2): self.gameOver = True
+        if self.turn == (self.boardSize ** 2): self.gameOver = True
 
     def sendInput(self, row, column):
-        print(f'Recived from {row},{column}')
+        #print(f'Recived from {row},{column}')
         selectedSpace = self.board[row][column]
-        print(f"Selected Space: {selectedSpace}")
+        #print(f"Selected Space: {selectedSpace}")
 
-        if self.mode == 'm':
+        if self.mode == 'm': #Multiplayer function
             if not self.gameOver:
-                if selectedSpace == '': 
+                if selectedSpace == '':
+                    #decides which player just made the turn
                     selectedSpace = 'X' if self.turn % 2 == 0 or self.turn == 0 else 'O'
                     if self.turn % 2 == 0 or self.turn == 0: 
                         self.board[row][column] = 'X'
-                        self.currentX[row][column] = 'X'
                     elif self.turn % 2 != 0:
                         self.board[row][column] = 'O'
-                        self.currentO[row][column] = 'O'
                 else: self.turn -= 1
                 self.turn+=1
                 self.checkSpaces()
-            else:
-                print("Game Done")
 
-        elif self.mode == 's':
-            
-            self.checkSpaces()
-
-            if self.turn % 2 != 0:
-                if selectedSpace == '':
-                    selectedSpace = 'X'
-                    self.board[row][column] = 'X'
-                    self.turn+=1
-                    print(self.turn)
-                    #if self.turn < (self.boardSize**2):
-                    #    self.turn+=2
-            elif self.turn % 2 == 0:
-                self.computerMove()
-                self.turn+=1
+        elif self.mode == 's': #Singleplayer function
+            if not self.gameOver:
+                if selectedSpace == '': 
+                    #decides which player just made the turn
+                    selectedSpace = 'X' if self.turn % 2 == 0 or self.turn == 0 else 'O'
+                    if self.turn % 2 == 0 or self.turn == 0: 
+                        self.board[row][column] = 'X'
+                        self.turn+=1
+                    self.checkSpaces()
+                    self.computerMove()
+                else: self.turn -= 1
 
     def computerMove(self):
         placedSuccesfully = False
@@ -103,5 +90,5 @@ class Game:
             randCol = random.randint(0,self.boardSize-1)
             if self.board[randRow][randCol] == '':
                 self.board[randRow][randCol] = 'O'
-                self.currentO[randRow][randCol] = 'O'
                 placedSuccesfully = True
+                self.turn+=1
