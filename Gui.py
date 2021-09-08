@@ -74,12 +74,18 @@ class Gui:
             
             
     def boardSizeScreen(self, mode):
+        #boardPreview = StringVar()
         self.clearWindow(self)
 
         boardSizeInput = StringVar()
         Label(root, text="Board size: ").grid(row=0, column=0)
         Entry(root, textvariable=boardSizeInput).grid(row=0, column=1)
-        Button(root, text="Set Board Size", command=lambda: self.updateBoardSize(self, boardSizeInput.get(), mode)).grid(row=1, column=0, columnspan=2)
+
+        #boardPreview.set((("|" + (" -|")*3+"\n")*3)
+
+        #Label(root, text=boardPreview.get()).grid(row=1, column=0, columnspan=2)
+
+        Button(root, text="Set Board Size", command=lambda: self.updateBoardSize(self, boardSizeInput.get(), mode)).grid(row=2, column=0, columnspan=2)
 
     def clearWindow(self):
         for widget in root.winfo_children():

@@ -80,7 +80,10 @@ class Game:
                         self.board[row][column] = 'X'
                         self.turn+=1
                     self.checkSpaces()
-                    self.computerMove()
+                    
+                    if not self.gameOver:
+                        self.computerMove()
+                        self.checkSpaces()
                 else: self.turn -= 1
 
     def computerMove(self):
